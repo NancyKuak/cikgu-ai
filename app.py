@@ -46,6 +46,19 @@ with st.sidebar:
         # Jika tiada secrets, minta pengguna masukkan sendiri
         api_key = st.text_input("Masukkan Google Gemini API Key:", type="password")
         st.caption("Dapatkan kunci di aistudio.google.com")
+
+    # ... kod api_key di atas ...
+    
+    st.divider()
+    # Butang Diagnostik
+    if st.button("Semak Sambungan Model"):
+        try:
+            genai.configure(api_key=api_key)
+            list_models = genai.list_models()
+            model_names = [m.name for m in list_models]
+            st.write("Model yang ditemui:", model_names)
+        except Exception as e:
+            st.error(f"Ralat: {e}")
     
     st.divider()
     
