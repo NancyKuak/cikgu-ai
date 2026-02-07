@@ -37,7 +37,6 @@ with st.sidebar:
     st.header("⚙️ Tetapan / Settings")
     # Letak URL logo sekolah (atau guna logo placeholder ini dulu)
     st.image("https://upload.wikimedia.org/wikipedia/ms/3/38/Sekolah_Menengah_Kebangsaan_Tatau.jpg", width=80) 
-    st.header("⚙️ Tetapan / Settings")
     
     # Cek jika kunci ada dalam Secrets (Untuk kegunaan awam)
     if "GOOGLE_API_KEY" in st.secrets:
