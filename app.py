@@ -161,9 +161,14 @@ with col2:
                     st.success("Semakan Selesai!")
                     
                 except Exception as e:
-                    st.error(f"Ralat: {e}")
-                    st.warning("Pastikan API Key anda betul dan gambar jelas.")
-    
+                    # Tukar error teknikal kepada bahasa mudah faham
+                    error_msg = str(e)
+                    if "429" in error_msg or "Resource has been exhausted" in error_msg:
+                        st.error("⚠️ Kuota Seminit Penuh! Sistem sedang 'berehat' sebentar.")
+                        st.warning("Sila tunggu 1 minit, kemudian tekan butang Semak semula.")
+                    else:
+                        st.error(f"Berlaku ralat teknikal: {error_msg}")
+                        st.info("Cuba refresh browser anda.")
     elif not api_key:
         st.warning("⚠️ Sila masukkan API Key di sebelah kiri dahulu.")
     elif not uploaded_file:
