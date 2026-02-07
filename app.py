@@ -18,9 +18,15 @@ st.info("Sistem ini menggunakan Google Gemini Flash untuk menyemak karangan berd
 # --- SIDEBAR: TETAPAN ---
 with st.sidebar:
     st.header("⚙️ Tetapan / Settings")
-    # Kunci API dimasukkan oleh pengguna di sini
-    api_key = st.text_input("Masukkan Google Gemini API Key:", type="password")
-    st.caption("Kunci ini tidak disimpan. Ia hanya digunakan untuk sesi ini.")
+    
+    # Cek jika kunci ada dalam Secrets (Untuk kegunaan awam)
+    if "GOOGLE_API_KEY" in st.secrets:
+        api_key = st.secrets["GOOGLE_API_KEY"]
+        st.success("✅ Kunci API telah diaktifkan secara automatik oleh pemilik.")
+    else:
+        # Jika tiada secrets, minta pengguna masukkan sendiri
+        api_key = st.text_input("Masukkan Google Gemini API Key:", type="password")
+        st.caption("Dapatkan kunci di aistudio.google.com")
     
     st.divider()
     
