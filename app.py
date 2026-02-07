@@ -3,20 +3,40 @@ import google.generativeai as genai
 from PIL import Image
 
 # --- KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="Sistem Semakan SPM AI", layout="wide")
+st.set_page_config(
+    page_title="E-Essay SMK Tatau",
+    page_icon="🏫",
+    layout="wide"
+)
 
+# CSS untuk tajuk supaya nampak cantik
 st.markdown("""
 <style>
-    .main-header {font-size: 30px; font-weight: bold; color: #2E86C1;}
-    .sub-header {font-size: 20px; font-weight: bold; color: #444;}
+    .main-header {
+        font-size: 36px; 
+        font-weight: bold; 
+        color: #1E3A8A; /* Warna Biru Gelap Rasmi */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .sub-header {
+        font-size: 18px; 
+        color: #555;
+        text-align: center;
+        margin-bottom: 30px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="main-header">📝 Sistem Semakan Karangan SPM (AI)</div>', unsafe_allow_html=True)
-st.info("Sistem ini menggunakan Google Gemini Flash untuk menyemak karangan berdasarkan format SPM sebenar.")
+# Tajuk Utama di Skrin
+st.markdown('<div class="main-header">🏫 E-Essay SMK Tatau</div>', unsafe_allow_html=True)
+st.markdown('<div class="sub-header">Sistem Semakan Karangan Digital - SMK Tatau (Powered by AI)</div>', unsafe_allow_html=True)
 
 # --- SIDEBAR: TETAPAN ---
 with st.sidebar:
+    st.header("⚙️ Tetapan / Settings")
+    # Letak URL logo sekolah (atau guna logo placeholder ini dulu)
+    st.image("https://upload.wikimedia.org/wikipedia/ms/3/38/Sekolah_Menengah_Kebangsaan_Tatau.jpg", width=80) 
     st.header("⚙️ Tetapan / Settings")
     
     # Cek jika kunci ada dalam Secrets (Untuk kegunaan awam)
