@@ -135,7 +135,7 @@ with col2:
                 try:
                     # Setup Gemini
                     genai.configure(api_key=api_key)
-                    model = genai.GenerativeModel('gemini-1.5-flash')
+                    model = genai.GenerativeModel('gemini-1.5-flash-001')
                     
                     # Dapatkan Prompt ikut subjek
                     prompt_text = get_system_prompt(subjek, part_selection)
