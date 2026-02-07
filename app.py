@@ -144,21 +144,39 @@ with col2:
     
     if uploaded_file and api_key:
         if st.button("Mula Semakan / Start Grading", type="primary"):
-            with st.spinner('Sedang menganalisis tulisan tangan & rubrik...'):
+            with st.spinner('Sedang menganalisis (Mungkin ambil masa jika trafik tinggi)...'):
                 try:
-                    # Setup Gemini
+                    # Setup (Sama macam biasa)
                     genai.configure(api_key=api_key)
-                    model = genai.GenerativeModel('gemini-2.0-flash-001')
                     
-                    # Dapatkan Prompt ikut subjek
-                    prompt_text = get_system_prompt(subjek, part_selection)
+                    # --- KOD BARU: LOGIK CUBA SEMULA (RETRY) ---
+                    try:
+                        # Cubaan Pertama
+                        response = model.generate_content([prompt_text, image])
+                    except Exception as e:
+                        # Jika gagal sebab kuota (Error 429), kita tunggu dan cuba lagi
+                        if "429" in str(e) or "Resource" in str(e):
+                            st.warning("⚠️ Trafik tinggi. Sistem sedang menunggu 10 saat sebelum mencuba semula...")
+                            time.sleep(10) # Tunggu 10 saat
+                            response = model.generate_content([prompt_text, image]) # Cubaan Kedua
+                        else:
+                            raise e # Kalau error lain, biar dia error
+                    # -------------------------------------------
                     
-                    # Hantar ke AI
-                    response = model.generate_content([prompt_text, image])
-                    
-                    # Papar Hasil
+                    # Papar Hasil (Sama macam biasa)
                     st.markdown(response.text)
-                    st.success("Semakan Selesai!")
+                    st.success("Semakan Selesai! ✅")
+                    
+                    # Butang Download (Sama macam biasa)
+                    st.download_button(
+                        label="📄 Muat Turun Laporan",
+                        data=response.text,
+                        file_name=f"Semakan_{subjek}.txt",
+                        mime="text/plain"
+                    )
+                    
+                except Exception as e:
+                    st.error("Maaf, sistem terlalu sibuk sekarang. Sila tunggu 1 minit dan cuba lagi.")
                     
                 except Exception as e:
                     # Tukar error teknikal kepada bahasa mudah faham
